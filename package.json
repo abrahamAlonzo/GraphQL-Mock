@@ -1,0 +1,24 @@
+{
+  "name": "graphql-mock",
+  "version": "1.0.0",
+  "description": "GraphQL server Mock using graphql-tools",
+  "main": "mockServer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node mockServer.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abrahamAlonzo/GraphQL-Mock.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/abrahamAlonzo/GraphQL-Mock/issues"
+  },
+  "homepage": "https://github.com/abrahamAlonzo/GraphQL-Mock#readme",
+  "dependencies": {
+    "graphql": "^14.5.8",
+    "graphql-tools": "^4.0.6"
+  }
+}
