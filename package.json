@@ -5,7 +5,7 @@
   "main": "mockServer.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node mockServer.js"
+    "start": "npx babel-node mockServer.js"
   },
   "repository": {
     "type": "git",
@@ -19,6 +19,14 @@
   "homepage": "https://github.com/abrahamAlonzo/GraphQL-Mock#readme",
   "dependencies": {
     "graphql": "^14.5.8",
+    "graphql-import": "^0.7.1",
     "graphql-tools": "^4.0.6"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.7.5",
+    "@babel/node": "^7.7.4",
+    "@babel/preset-env": "^7.7.4",
+    "@babel/register": "^7.7.4",
+    "babel-node": "^0.0.1-security"
   }
 }

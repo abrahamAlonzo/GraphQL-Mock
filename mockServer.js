@@ -1,6 +1,11 @@
-var { makeExecutableSchema, addMockFunctionsToSchema } = require('graphql-tools');
-var { graphql , GraphQLScalarType} = require('graphql');
-var { Kind } = require('graphql/language');
+
+import { makeExecutableSchema, addMockFunctionsToSchema } from 'graphql-tools';
+import { graphql , GraphQLScalarType} from 'graphql';
+import { Kind } from 'graphql/language';
+import { importSchema } from 'graphql-import';
+var typeDef = importSchema('./schema.graphql')
+// var typeDef = require('./schema.graphql');
+// import schema from './schema.graphql'
 
 const resolverMap = {
     Date: new GraphQLScalarType({
@@ -21,143 +26,20 @@ const resolverMap = {
     }) 
 }
 
+
 // Fill this in with the schema string
-const schemaString = `
-    scalar Date
 
-    enum Currency {
-        DLLS
-        MXN
-        YEN
-    }
-
-
-    enum Language {
-        ES
-        EN
-        JAP
-    }
-
-    type Address {
-        street: String
-        number: String
-        PostalCode: Int
-        
-    }
-
-    type GeoCoordinates {
-        lat: Float
-        lng: Float
-    }
-
-    type AppPreferences {
-        darkMode: String
-        pushNotificationsEnabled: [String]
-    }
-
-    type Post {
-        id: ID!
-        comment: String
-    }
-
-    type User {
-        id: ID!
-        activated: Boolean
-        creationDate: Date
-        username: String
-        firstName: String
-        lastName: String
-        age: Int
-        phone: Int
-        email: Int
-        secondaryEmail: Int
-        recoveryEmail: Int
-        facebookToken: String
-        twitterToken: String
-        googlePlusToken: String
-        token: String
-        address: [Address]
-        oauth2Methods: [String]
-        foodPreferences: [String]
-        totalMoneyExpend: [Int]
-        methodsOfPay: [Int]
-        numberOfTotalOrders: [Int]
-        coordinates: [GeoCoordinates]
-        language: Language
-        avatar: String
-        savedOrders: [Order]
-    }
-
-    type Promotion {
-        id: ID
-        code: String
-    }
-
-    type Item {
-        id: ID
-        SKU: String
-        name: String
-        description: String
-        price: Float
-        currency: Currency
-        category: Category
-    }
-
-    type Menu {
-        id: ID!
-        items: [Item]
-        promotions: [Promotion]
-    }
-
-    type Ingredients {
-        id: ID!
-        name: String
-        description: String
-        price: Float
-        currency: Currency
-    }
-
-
-    type Category {
-        ingredientComposition: Boolean
-    }
-
-    type Order {
-        id: ID!
-        category: String
-        items: [Item]
-        totalPrice: Float
-        currency: Currency
-    }
-
-    type Company {
-        id: ID!
-        companyName: String
-        branchOffice: String
-        email: String
-        recoveryEmail: String
-        language: Language
-        phone: [String] 
-        avatarMobileApp: String
-        avatarAdminApp: String
-        menu: Menu
-    }
-
-    # the schema allows the following query:
-    type Query {
-        user(id: Int!): User
-        company(id: Int!): Company
-        order(id: Int!): Order
-        menu(id: Int!): Menu
-    }
-`;
 
 // Make a GraphQL schema with no resolvers
-const schema = makeExecutableSchema({ typeDefs: schemaString, resolvers: resolverMap });
+const schema = makeExecutableSchema({ typeDefs: typeDef, resolvers: resolverMap });
+
+
+const DateMock = {
+    Date: () => new Date()
+  }
 
 // Add mocks, modifies schema in place
-addMockFunctionsToSchema({ schema });
-
+addMockFunctionsToSchema({ schema,mocks: DateMock });
 const query = `
     query {
         user(id: 6) { 
@@ -244,8 +126,8 @@ const queryMenu = `
 
 
 graphql(schema, query).then((result) => console.log('Got result User: ', JSON.stringify(result, null, 4)));
-graphql(schema, queryCompany).then((result) => console.log('Got result Company: ', JSON.stringify(result, null, 4)));
-graphql(schema, queryOrder).then((result) => console.log('Got result Order: ', JSON.stringify(result, null, 4)));
-graphql(schema, queryMenu).then((result) => console.log('Got result Menu', JSON.stringify(result, null, 4)));
+// graphql(schema, queryCompany).then((result) => console.log('Got result Company: ', JSON.stringify(result, null, 4)));
+// graphql(schema, queryOrder).then((result) => console.log('Got result Order: ', JSON.stringify(result, null, 4)));
+// graphql(schema, queryMenu).then((result) => console.log('Got result Menu', JSON.stringify(result, null, 4)));
 
 
