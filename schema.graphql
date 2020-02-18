@@ -6,7 +6,6 @@ enum Currency {
     YEN
 }
 
-
 enum Language {
     ES
     EN
@@ -17,7 +16,6 @@ type Address {
     street: String
     number: String
     PostalCode: Int
-    
 }
 
 type GeoCoordinates {
@@ -32,11 +30,13 @@ type AppPreferences {
 
 type Post {
     id: ID!
+    userId: String
     comment: String
 }
 
 type User {
     id: ID!
+    comments: [Post]
     activated: Boolean
     creationDate: Date
     username: String
@@ -45,6 +45,8 @@ type User {
     age: Int
     phone: Int
     email: Int
+    accountCreationDate: Date
+    lastSessionDate: Date
     secondaryEmail: Int
     recoveryEmail: Int
     facebookToken: String
@@ -116,6 +118,8 @@ type Company {
     avatarMobileApp: String
     avatarAdminApp: String
     menu: Menu
+    accountCreationDate: Date
+    lastSessionDate: Date
 }
 
 # the schema allows the following query:
@@ -124,4 +128,11 @@ type Query {
     company(id: Int!): Company
     order(id: Int!): Order
     menu(id: Int!): Menu
+}
+
+# this schema allows the following mutation:
+type Mutation {
+    upvotePost (
+        postId: Int!
+    ): Post
 }

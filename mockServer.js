@@ -4,8 +4,6 @@ import { graphql , GraphQLScalarType} from 'graphql';
 import { Kind } from 'graphql/language';
 import { importSchema } from 'graphql-import';
 var typeDef = importSchema('./schema.graphql')
-// var typeDef = require('./schema.graphql');
-// import schema from './schema.graphql'
 
 const resolverMap = {
     Date: new GraphQLScalarType({
@@ -26,20 +24,17 @@ const resolverMap = {
     }) 
 }
 
-
-// Fill this in with the schema string
-
-
 // Make a GraphQL schema with no resolvers
 const schema = makeExecutableSchema({ typeDefs: typeDef, resolvers: resolverMap });
 
-
+// Own data mock
 const DateMock = {
     Date: () => new Date()
   }
 
 // Add mocks, modifies schema in place
 addMockFunctionsToSchema({ schema,mocks: DateMock });
+
 const query = `
     query {
         user(id: 6) { 
@@ -126,8 +121,8 @@ const queryMenu = `
 
 
 graphql(schema, query).then((result) => console.log('Got result User: ', JSON.stringify(result, null, 4)));
-// graphql(schema, queryCompany).then((result) => console.log('Got result Company: ', JSON.stringify(result, null, 4)));
-// graphql(schema, queryOrder).then((result) => console.log('Got result Order: ', JSON.stringify(result, null, 4)));
-// graphql(schema, queryMenu).then((result) => console.log('Got result Menu', JSON.stringify(result, null, 4)));
+graphql(schema, queryCompany).then((result) => console.log('Got result Company: ', JSON.stringify(result, null, 4)));
+graphql(schema, queryOrder).then((result) => console.log('Got result Order: ', JSON.stringify(result, null, 4)));
+graphql(schema, queryMenu).then((result) => console.log('Got result Menu', JSON.stringify(result, null, 4)));
 
 
