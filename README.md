@@ -7,8 +7,8 @@ Common mock schemas for apps using graphql
 ```shell
 git clone git@github.com:abrahamAlonzo/GraphQL-Mock.git
 cd GraphQL-Mock
-npm install
-npm start
+yarn install
+yarn run start
 ```
 
 ## Custom Type
